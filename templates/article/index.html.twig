@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article index{% endblock %}
+
+{% block body %}
+<main class="mt-5 pt-5">
+    <div class="container">
+
+        <!--Section: Cards-->
+        <section class="pt-4">
+
+            <!-- Heading & Description -->
+            <div class="wow fadeIn">
+                <!--Section heading-->
+                <h2 class="h1 text-center mb-5">Articles</h2>
+                <!--Section description-->
+                <p class="text-center">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Excepturi doloremque,
+                    odit, omnis officiis ab nesciunt accusantium eveniet suscipit cumque praesentium error impedit!
+                    Inventore distinctio saepe consequuntur porro harum, consequatur quisquam.</p>
+                <p class="text-center mb-5 pb-5">Trusted by over
+                    <strong>400 000</strong> developers and designers. Easy to use & customize. 400+ material UI
+                    elements, templates
+                    & tutorials.
+                </p>
+
+                <a href="{{ path('article_new') }}" class="btn btn-outline-black">Nouvelle article</a>
+            </div>
+            
+            <!-- Heading & Description -->
+            {% for article in articles %}
+            <!--Grid row-->
+            <div class="row wow fadeIn">
+
+                <!--Grid column-->
+                <div class="col-lg-5 col-xl-4 mb-4">
+                    <!--Featured image-->
+                    <div class="view overlay rounded z-depth-1">
+                        <img src="{{ article.image }}" class="img-fluid"
+                            alt="">
+                        <a href="{{ path('article_show', {'id': article.id}) }}">
+                            <div class="mask rgba-white-slight"></div>
+                        </a>
+                    </div>
+                </div>
+                <!--Grid column-->
+
+                <!--Grid column-->
+                <div class="col-lg-7 col-xl-7 ml-xl-4 mb-4">
+                    <h3 class="mb-3 font-weight-bold dark-grey-text">
+                        <strong>{{ article.title }}</strong>
+                    </h3>
+                    <p class="grey-text">{{ article.resum }}</p>
+                    <a href="{{ path('article_show', {'id': article.id}) }}" class="btn btn-primary btn-md">More
+                        <i class="fas fa-play ml-2"></i>
+                    </a>
+                </div>
+                <!--Grid column-->
+
+            </div>
+            <!--Grid row-->
+
+            <hr class="mb-5">
+            {% endfor %}
+
+        </section>
+        <!--Section: Cards-->
+
+    </div>
+</main>
+<!--Main layout-->
+{% endblock %}

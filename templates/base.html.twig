@@ -1,12 +1,145 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="{{ asset('css/mdb.min.css') }}" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="{{ asset('css/style.min.css') }}" rel="stylesheet">
+    {% block stylesheets %}{% endblock %}
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="{{ asset('js/mdb.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/mdb.js') }}"></script>
+    <!-- Initializations -->
+    <script type="text/javascript">
+        new WOW().init();
+    </script>
+    <script type="text/javascript" src="{{ asset('js/md-flash.js') }}"></script>
+</head>
+
+<body>
+    {% set uri = app.request.attributes.get('_route') %}
+    <!--Navbar -->
+    <nav class="mb-1 navbar navbar-expand-lg navbar-dark bg-dark fixed-top scrolling-navbar">
+        <a class="navbar-brand" href="{{ path('home') }}"><i class="fas fa-home"></i></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
+            aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item {% if uri == 'home' or uri == '' %} active {% endif %}">
+                    <a class="nav-link" href="{{ path('home') }}">Home</a>
+                </li>
+
+                <li class="nav-item {% if uri == 'categorie_index' %} active {% endif %}">
+                    <a class="nav-link" href="{{ path('categorie_index') }}">Categories</a>
+                </li>
+
+                <li class="nav-item {% if uri == 'article_index' %} active {% endif %}">
+                    <a class="nav-link" href="{{ path('article_index') }}">Articles</a>
+                </li>
+
+                <li class="nav-item {% if uri == 'nous' %} active {% endif %}">
+                    <a class="nav-link" href="{{ path('nous') }}">Qui sommes-nous</a>
+                </li>
+
+                <li class="nav-item {% if uri == 'contact' %} active {% endif %}">
+                    <a class="nav-link" href="{{ path('contact') }}">Contact</a>
+                </li>
+
+                <li class="nav-item {% if uri == 'admin' %} active {% endif %}">
+                    <a class="nav-link" href="{{ path('admin') }}">Admin</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto nav-flex-icons">
+                <li class="nav-item">
+                    <a class="nav-link waves-effect waves-light">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link waves-effect waves-light">
+                        <i class="fab fa-google-plus-g"></i>
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-default"
+                        aria-labelledby="navbarDropdownMenuLink-333">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="mb-n"></div>
+    <!--/.Navbar -->
+
+    <!--Flash -->
+    {% for message in app.flashes('error') %}
+    <script>
+        toastr.error("{{ message }}");
+    </script>
+    {% endfor %}
+    {% for message in app.flashes('success') %}
+    <script>
+        toastr.success("{{ message }}");
+    </script>
+    {% endfor %}
+    {% for message in app.flashes('warning') %}
+    <script>
+        toastr.warning("{{ message }}");
+    </script>
+    {% endfor %}
+    {% for message in app.flashes('info') %}
+    <script>
+        toastr.info("{{ message }}");
+    </script>
+    {% endfor %}
+    <!--End Flash -->
+
+    {% block body %}{% endblock %}
+
+    {% block javascripts %}{% endblock %}
+</body>
+
 </html>

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categories{% endblock %}
+
+{% block body %}
+<main id="categories">
+    <div class="container">
+        <h1 class="text-center">Categories</h1>
+
+        <div class="container">
+            <hr>
+            {% for category in categories %}
+            <!--Small news-->
+            <div class="row">
+                <div class="col-md-3">
+
+                    <!--Image-->
+                    <div class="view overlay rounded z-depth-1" style="width: 100px;">
+                        <img width="100" src="{{ category.image }}" class="img-fluid" alt="Minor sample post image">
+                        <a href="{{ path('category', {id: category.id}) }}">
+                            <div class="mask rgba-white-slight"></div>
+                        </a>
+                    </div>
+                </div>
+
+                <!--Excerpt-->
+                <div class="col-md-9">
+                    <!-- <p class="dark-grey-text">
+                            <strong>18/08/2018</strong>
+                        </p> -->
+                    <a href="{{ path('category', {id: category.id}) }}">
+                        <h2 class="text-monospace font-weight-bold text-uppercase cyan-lighter-hover">{{ category.title }}</h2>
+                        <i class="fa fa-angle-right float-right"></i>
+                    </a>
+                </div>
+            </div>
+            <!--/Small news-->
+            <hr>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+{% endblock %}

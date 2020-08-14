@@ -1,0 +1,156 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Categories{% endblock %}
+
+{% block body %}
+<main id="admin">
+    <div class="container">
+        <div class="wrapper-editor">
+
+            <div class="block my-4">
+                <div class="d-flex justify-content-center">
+                    <p class="h5 text-primary createShowP mt-4">Produits</p>
+                </div>
+            </div>
+
+            <div class="row d-flex justify-content-center modalWrapper">
+                <div class="modal fade addNewInputs" id="modalAdd" tabindex="-1" role="dialog"
+                    aria-labelledby="modalAdd" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header text-center">
+                                <h4 class="modal-title w-100 font-weight-bold text-primary ml-5">Add new form</h4>
+                                <button type="button" class="close text-primary" data-dismiss="modal"
+                                    aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body mx-3">
+                                <form action="{{ path('produit_new') }}" method="post">
+                                    {{ include('admin/produit_form.html.twig') }}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <a href="" class="btn btn-info btn-rounded btn-sm" data-toggle="modal" data-target="#modalAdd">Add<i
+                        class="fas fa-plus-square ml-1"></i></a>
+                </div>
+
+                {% for produit in produits %}
+                <div class="modal fade" id="modalDelete{{ produit.id }}" tabindex="-1" role="dialog"
+                    aria-labelledby="modalDelete" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header text-center">
+                                <h4 class="modal-title w-100 font-weight-bold ml-5 text-danger">Supprimer
+                                    {{ produit.title }}</h4>
+                                <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body mx-3">
+                                <p class="text-center h4">Etes-vous sûr de vouloir supprimer la produit
+                                    {{ produit.title }} ?</p>
+
+                            </div>
+                            <div class="modal-footer d-flex justify-content-center deleteButtonsWrapper">
+                                <form method="post" action="{{ path('produit_delete', {'id': produit.id}) }}">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token"
+                                        value="{{ csrf_token('delete' ~ produit.id) }}">
+                                    <button class="btn btn-danger btnYesClass">
+                                        Yes
+                                    </button>
+                                </form>
+                                <button type="button" class="btn btn-primary btnNoClass" id="btnNo"
+                                    data-dismiss="modal">No</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+
+            </div>
+
+            <table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th class="th-sm">
+                            Image
+                        </th>
+                        <th class="th-sm">
+                            Nom
+                        </th>
+                        <th class="th-sm">
+                            Categorie
+                        </th>
+                        <th class="th-sm">
+                            Prix
+                        </th>
+                        <th class="th-sm">
+                            Description
+                        </th>
+                        <th class="th-sm">
+                            Edit
+                        </th>
+                        <th class="th-sm">
+                            Delete
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for produit in produits %}
+                    <tr>
+                        <td>
+                            <img src="{{ produit.image }}" width="50" alt="">
+                        </td>
+                        <td>{{ produit.title }}</td>
+                        <td>{{ produit.categorie.title }}</td>
+                        <td>{{ produit.price }} €</td>
+                        <td>
+                            {% if produit.description|length > 20 %}
+                                {{ produit.description[:20] }}...
+                            {% else %}
+                                {{ produit.description }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="text-center buttonEditWrapper">
+                                <a href="{{ path('produit_edit', {'id': produit.id}) }}" class="btn btn-info btn-rounded btn-sm buttonEdit">
+                                    Edit
+                                    <i class="fas fa-pencil-alt ml-1"></i>
+                                </a>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-center">
+                                <button class="btn btn-danger btn-sm btn-rounded buttonDelete" data-toggle="modal"
+                                    data-target="#modalDelete{{produit.id}}">
+                                    Delete
+                                    <i class="fas fa-times ml-1"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready( function () {
+        $('#dtBasicExample').DataTable();
+    });
+</script>
+{% endblock %}

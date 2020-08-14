@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin produits{% endblock %}
+
+{% block body %}
+<main id="admin_produit_edit">
+    <div class="container">
+        <div class="row d-flex justify-content-center modalWrapper">
+            <div class="w-100 modalEditClass show" id="modalEdit{{ produit.id }}" tabindex="-1" role="dialog"
+                aria-labelledby="modalEdit{{ produit.id }}" aria-modal="true" style="display: block;top: 5rem">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h4 class="modal-title w-100 font-weight-bold text-secondary ml-5">Edit form</h4>
+                            <a href=" {{ path('admin_produits') }} " type="button" class="close text-secondary">
+                                <span aria-hidden="true">&times;</span>
+                            </a>
+                        </div>
+                        <div class="modal-body mx-3">
+                            <form action="{{ path('produit_edit', {'id': produit.id}) }}" method="post">
+                                {{ include('admin/produit_form.html.twig', {'button_label': 'Edit', 'button_class': 'btn btn-outline-secondary btn-block editInside' }) }}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
